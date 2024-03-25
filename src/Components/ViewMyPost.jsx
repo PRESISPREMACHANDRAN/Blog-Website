@@ -1,8 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from './Header'
 import Footer from './Footer'
+import axios from 'axios'
 
 const ViewMyPost = () => {
+
+  const [data,changeData]=useState({
+    user_id:sessionStorage.getItem("userID"),
+    data:[]
+  })
+  const fetchData = () => {
+    axios.post("http://localhost:4000/viewmyPost").then(
+      (response)=>{
+        changeData(response.data)
+      }
+    )
+  };
+
+  useEffect(()=>{fetchData()},[])
   return (
     <>
       <Header />
@@ -20,24 +35,17 @@ const ViewMyPost = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
+               {data.data.map(
+                (value,index)=>{
+                  return  <tr>
+                  <th scope="row">{index+1}</th>
+                  <td>{value.title}</td>
+                  <td>{value.post}</td>
+                  <td>{value.tag}</td>
                 </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Larry</td>
-                  <td>the Bird</td>
-                  <td>@twitter</td>
-                </tr>
+                
+                }
+               )}
               </tbody>
             </table>
           </div>
