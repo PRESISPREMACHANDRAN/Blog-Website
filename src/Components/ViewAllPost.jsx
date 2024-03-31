@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
-import Footer from "./Footer";
+
 import axios from "axios";
 
 const ViewAllPost = () => {
@@ -55,7 +55,7 @@ return (
           </div>
         </div>
       </div>
-      <Footer />
+     
     </>
   );
 };

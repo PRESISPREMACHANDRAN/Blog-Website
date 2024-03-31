@@ -7,17 +7,23 @@ const ViewMyPost = () => {
 
   const [data,changeData]=useState({
     user_id:sessionStorage.getItem("userID"),
-    data:[]
+    
   })
+
+  const [showData,changeShowData]=useState([])
+
   const fetchData = () => {
-    axios.post("http://localhost:4000/viewmyPost").then(
+    axios.post("http://localhost:4000/viewMyPost",data).then(
       (response)=>{
-        changeData(response.data)
+
+        console.log(response.data)
+        changeShowData(response.data.data)
       }
     )
   };
 
   useEffect(()=>{fetchData()},[])
+
   return (
     <>
       <Header />
@@ -35,7 +41,7 @@ const ViewMyPost = () => {
                 </tr>
               </thead>
               <tbody>
-               {data.data.map(
+               {showData.map(
                 (value,index)=>{
                   return  <tr>
                   <th scope="row">{index+1}</th>
