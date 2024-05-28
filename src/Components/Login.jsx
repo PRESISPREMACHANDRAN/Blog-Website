@@ -4,9 +4,9 @@ import LoginHeader from "./LoginHeader";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+
 const Login = () => {
   const [data, changeData] = useState({
-
     email: "",
     password: "",
   });
@@ -19,16 +19,19 @@ const Login = () => {
 
   const submitValue = () => {
     console.log(data);
-    axios.post("http://localhost:4000/login", data).then((response) => {
+    axios.post(process.env.REACT_APP_BASEURL+"/login", data).then((response) => {
       if (response.data.status !== "success") {
         alert("invalid email and password...");
       } else {
 
         let userID = response.data.userID;
         let name=response.data.name
+        let token=response.data.token
         console.log(userID);
+        console.log(token);
         sessionStorage.setItem("userID",userID)
         sessionStorage.setItem("name",name)
+        sessionStorage.setItem("token",token)
       
         navigate("/createPost");
       }

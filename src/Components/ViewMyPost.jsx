@@ -7,13 +7,14 @@ const ViewMyPost = () => {
 
   const [data,changeData]=useState({
     user_id:sessionStorage.getItem("userID"),
+    token:sessionStorage.getItem("token"),
     
   })
 
   const [showData,changeShowData]=useState([])
 
   const fetchData = () => {
-    axios.post("http://localhost:4000/viewMyPost",data).then(
+    axios.post(process.env.REACT_APP_BASEURL+"/viewMyPost",data).then(
       (response)=>{
 
         console.log(response.data)

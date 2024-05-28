@@ -22,16 +22,16 @@ const navigate=useNavigate()
   const submitValue = () => {
     if (data.confirmPassword==data.password) {
       console.log(data);
-      axios.post("http://localhost:4000/register", data).then((response) => {
+      axios.post(process.env.REACT_APP_BASEURL+"/register", data).then((response) => {
         if (response.data.status !== "success") {
           alert(response.data.status);
         } else {
-          alert("succesfully registered.Please login again...");
+          alert("successfully registered.Please login again...");
           navigate("/");
         }
       });
     } else {
-      alert("password and confirm password doesnt match!")
+      alert("password and confirm password doesn't match!")
     }
   };
 

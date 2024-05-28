@@ -7,6 +7,7 @@ import axios from "axios";
 const CreatePost = () => {
   const [data, changeData] = useState({
     user_id: sessionStorage.getItem("userID"),
+    token: sessionStorage.getItem("token"),
     title: "",
     post: "",
     tag: "",
@@ -19,7 +20,7 @@ const CreatePost = () => {
 
   const submitValue = () => {
     console.log(data);
-    axios.post("http://localhost:4000/createPost", data).then((response) => {
+    axios.post(process.env.REACT_APP_BASEURL+"/createPost", data).then((response) => {
       if (response.data.status === "success") {
         alert("successfully added");
       } else {

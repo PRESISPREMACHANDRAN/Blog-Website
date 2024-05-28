@@ -4,17 +4,23 @@ import Header from "./Header";
 import axios from "axios";
 
 const ViewAllPost = () => {
-  const [data, changeData] = useState({ data: [] });
+  const [token, changeToken] = useState({
+    token: sessionStorage.getItem("token"),
+  });
+  const [data, changeData] = useState({
+    data: [],
+  });
 
   const fetchData = () => {
-    axios.post("http://localhost:4000/viewAll").then(
-      (response)=>{
-        changeData(response.data)
-      }
-    )
+    axios.post(process.env.REACT_APP_BASEURL+"/viewAll",token).then((response) => {
+      console.log(response.data)
+      changeData(response.data);
+    });
   };
 
-  useEffect(()=>{fetchData()},[])
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <>
       <Header />
@@ -33,29 +39,23 @@ const ViewAllPost = () => {
                 </tr>
               </thead>
               <tbody>
-                {
-                  data.data.map(
-                    (value,index)=>{
-return (
-  <tr>
-    <th scope="row">{index+1}</th>
-    <td>{value.FirstName}</td>
-    <td>{value.LastName}</td>
-    <td>{value.title}</td>
-    <td>{value.post}</td>
-    <td>{value.tag}</td>
-  </tr>
-);
-                    }
-                  )
-                }
-                
+                {data.data.map((value, index) => {
+                  return (
+                    <tr>
+                      <th scope="row">{index + 1}</th>
+                      <td>{value.FirstName}</td>
+                      <td>{value.LastName}</td>
+                      <td>{value.title}</td>
+                      <td>{value.post}</td>
+                      <td>{value.tag}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
         </div>
       </div>
-     
     </>
   );
 };
